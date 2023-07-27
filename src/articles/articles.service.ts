@@ -23,7 +23,10 @@ export class ArticlesService {
   }
 
   findOne(id: number) {
-    const article = this.prisma.article.findUnique({ where: {id} });
+    const article = this.prisma.article.findUnique({
+       where: {id},
+       include: { author: true }
+    });
     return article;
   }
 
