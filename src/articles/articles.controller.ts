@@ -12,37 +12,49 @@ export class ArticlesController {
 
   @Post()
   @ApiCreatedResponse({type: ArticleEntity})
-  create(@Body() createArticleDto: CreateArticleDto) {
-    return this.articlesService.create(createArticleDto);
+  async create(@Body() createArticleDto: CreateArticleDto) {
+    const newArticle = await this.articlesService.create(createArticleDto);
+    const newArticleEntity = new ArticleEntity(newArticle);
+    return newArticleEntity;
   }
 
   @Get()
   @ApiOkResponse({type: ArticleEntity, isArray: true})
-  findAll() {
-    return this.articlesService.findAll();
+  async findAll() {
+    const articles = await this.articlesService.findAll();
+    const articlesEntities = articles.map(article => new ArticleEntity(article));
+    return articlesEntities;
   }
 
   @Get("drafts")
   @ApiOkResponse({type: ArticleEntity, isArray: true})
-  findDrafts() {
-    return this.articlesService.findDrafts();
+  async findDrafts() {
+    const drafts = await this.articlesService.findDrafts();
+    const draftsEntities = drafts.map(draft => new ArticleEntity(draft));
+    return draftsEntities;
   }
 
   @Get(':id')
   @ApiOkResponse({type: ArticleEntity})
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.articlesService.findOne(id);
+  async findOne(@Param('id', ParseIntPipe) id: number) {
+    const article = await this.articlesService.findOne(id);
+    const articleEntity = new ArticleEntity(article);
+    return articleEntity;
   }
 
   @Patch(':id')
   @ApiOkResponse({type: ArticleEntity})
-  update(@Param('id', ParseIntPipe) id: number, @Body() updateArticleDto: UpdateArticleDto) {
-    return this.articlesService.update(id, updateArticleDto);
+  async update(@Param('id', ParseIntPipe) id: number, @Body() updateArticleDto: UpdateArticleDto) {
+    const updatedArticle = await this.articlesService.update(id, updateArticleDto);
+    const updatedArticleEntity = new ArticleEntity(updatedArticle);
+    return updatedArticleEntity;
   }
 
   @Delete(':id')
   @ApiOkResponse({type: ArticleEntity})
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.articlesService.remove(id);
+  async remove(@Param('id', ParseIntPipe) id: number) {
+    const removedArticle = await this.articlesService.remove(id);
+    const removedArticleEntity = new ArticleEntity(removedArticle);
+    return removedArticleEntity;
   }
 }
