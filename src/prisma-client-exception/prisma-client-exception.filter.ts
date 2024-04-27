@@ -7,23 +7,23 @@ import { Response } from 'express';
 export class PrismaClientExceptionFilter extends BaseExceptionFilter implements ExceptionFilter {
   catch(exception: Prisma.PrismaClientKnownRequestError, host: ArgumentsHost) {
     console.error(exception.message);
-    
+
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const message = exception.message.replace(/\n/g, '');
 
     switch (exception.code) {
-      case "P2002": {
+      case 'P2002': {
         const status = HttpStatus.CONFLICT;
         response.status(status).json({
           statusCode: status,
-          message: message
+          message: message,
         });
         break;
       }
       default:
         super.catch(exception, host);
-        break;    
+        break;
     }
   }
 }

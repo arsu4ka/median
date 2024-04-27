@@ -5,11 +5,11 @@ import { AuthEntity } from './entity/auth.entity';
 import { LoginDto } from './dto/login.dto';
 
 @Controller('auth')
-@ApiTags("auth")
+@ApiTags('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post("login")
+  @Post('login')
   @ApiOkResponse({ type: AuthEntity })
   async login(@Body() { email, password }: LoginDto) {
     const authEntity = await this.authService.login(email, password);

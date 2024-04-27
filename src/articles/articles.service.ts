@@ -8,24 +8,24 @@ export class ArticlesService {
   constructor(private prisma: PrismaService) {}
 
   create(createArticleDto: CreateArticleDto) {
-    const article = this.prisma.article.create({data: createArticleDto});
-    return article
+    const article = this.prisma.article.create({ data: createArticleDto });
+    return article;
   }
 
   findAll() {
-    const articles = this.prisma.article.findMany({where: {published: true}});
+    const articles = this.prisma.article.findMany({ where: { published: true } });
     return articles;
   }
 
   findDrafts() {
-    const articles = this.prisma.article.findMany({where: {published: false}});
+    const articles = this.prisma.article.findMany({ where: { published: false } });
     return articles;
   }
 
   findOne(id: number) {
     const article = this.prisma.article.findUnique({
-       where: {id},
-       include: { author: true }
+      where: { id },
+      include: { author: true },
     });
     return article;
   }
@@ -33,13 +33,13 @@ export class ArticlesService {
   update(id: number, updateArticleDto: UpdateArticleDto) {
     const article = this.prisma.article.update({
       where: { id },
-      data: updateArticleDto
+      data: updateArticleDto,
     });
     return article;
   }
 
   remove(id: number) {
-    const article = this.prisma.article.delete({where: {id}});
+    const article = this.prisma.article.delete({ where: { id } });
     return article;
   }
 }
