@@ -30,6 +30,9 @@ export class ArticleEntity implements Article {
   @ApiProperty({ required: false, type: UserEntity })
   author?: UserEntity;
 
+  @ApiProperty()
+  likesCount: number;
+
   constructor({ author, ...data }: Partial<ArticleEntity>) {
     Object.assign(this, data);
     if (author) {

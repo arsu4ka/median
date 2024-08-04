@@ -19,7 +19,6 @@ export class CreateArticleDto {
   @IsNotEmpty()
   @ApiProperty()
   body: string;
-  л;
 
   @IsBoolean()
   @IsOptional()
